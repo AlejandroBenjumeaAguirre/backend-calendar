@@ -31,7 +31,9 @@ const createUser = async( req =  request, res = response ) => {
     res.status(201).json({
       ok: true,
       msg: 'Registro',
-      token
+      token,
+      name: user.name,
+      uid: user._id
     });
 
    } catch (error) {
@@ -77,7 +79,7 @@ const loginUser = async( req = request, res = response ) => {
       res.json({
         ok: true,
         uid: user._id,
-        email: user.email,
+        email: user.name,
         token
       });
 
@@ -97,10 +99,13 @@ const reNewToken = async( req = request, res = response ) => {
     const uid = req.uid;
     const name = req.name;
 
+
     const token = await generarJwt(uid, name);
 
     res.json({
       ok: true,
+      name,
+      uid,
       token
     });
   
